@@ -1,1261 +1,1415 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Smart E-Waste Management</title>
+    <title>EcoCycle - E-Waste Management</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
+<!-- ================= HEADER ================= -->
 
-    <header>
+<header class="header">
 
-        <nav>
+    <div class="logo">
+        ♻️ EcoCycle
+    </div>
 
-            <div class="logo">
-                ♻️ E-Waste Management
-            </div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#categories">E-Waste</a>
+        <a href="#process">How It Works</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#history">History</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#categories">Categories</a></li>
-                <li><a href="#calculator">Calculator</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#how">How It Works</a></li>
-                <li><a href="#pickup">Pickup</a></li>
-                <li><a href="#centers">Centers</a></li>
-                <li><a href="#tips">Tips</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#feedback">Feedback</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+    <div class="header-buttons">
+        <button id="darkModeBtn">🌙</button>
 
-        </nav>
-
-        <button id="darkModeBtn" onclick="toggleDarkMode()">
-            🌙 Dark Mode
+        <button id="loginBtn" onclick="openAuth('login')">
+            Login
         </button>
 
-    </header>
+        <button id="signupBtn" onclick="openAuth('signup')">
+            Sign Up
+        </button>
+
+        <div id="userBox" class="user-box hidden">
+            <span id="welcomeUser"></span>
+            <button onclick="logout()">Logout</button>
+        </div>
+    </div>
+
+</header>
 
 
-    <!-- ================= HOME ================= -->
+<!-- ================= HOME ================= -->
 
-    <section id="home" class="hero">
+<section id="home" class="hero">
 
-        <div class="hero-content">
+    <div class="hero-content">
 
-            <p class="hero-small">
-                ♻️ Smart • Clean • Sustainable
-            </p>
+        <span class="hero-tag">
+            🌱 Smart E-Waste Management
+        </span>
 
-            <h1>
-                Smart E-Waste Management
-            </h1>
+        <h1>
+            Give Your E-Waste
+            <span>A Second Life</span>
+        </h1>
+
+        <p>
+            Identify your electronic waste, schedule a pickup,
+            and help us recycle it responsibly.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#schedule" class="main-btn">
+                Schedule Pickup
+            </a>
+
+            <a href="#categories" class="secondary-btn">
+                Identify E-Waste
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="section">
+
+    <div class="section-title">
+
+        <span>ABOUT E-WASTE</span>
+
+        <h2>
+            Small Actions Can Make
+            <strong>A Big Difference</strong>
+        </h2>
+
+        <p>
+            Electronic waste contains valuable materials as well as
+            harmful substances. Proper management helps protect the
+            environment and recover useful resources.
+        </p>
+
+    </div>
+
+
+    <div class="info-cards">
+
+        <div class="info-card clickable"
+             onclick="showInfo(
+             'Reduce',
+             'Reduce unnecessary electronic purchases. Before buying a new device, check whether your existing device can still be repaired or upgraded. Reducing electronic consumption helps decrease the amount of e-waste generated.'
+             )">
+
+            <div class="card-icon">📉</div>
+
+            <h3>Reduce</h3>
 
             <p>
-                Manage electronic waste responsibly and protect
-                our environment for a cleaner and greener future.
+                Buy electronics responsibly and avoid unnecessary
+                electronic consumption.
             </p>
 
-            <div class="hero-buttons">
-
-                <a href="#pickup" class="btn">
-                    Schedule Pickup
-                </a>
-
-                <a href="#categories" class="btn secondary-btn">
-                    Explore E-Waste
-                </a>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section id="about">
-
-        <h2>About E-Waste</h2>
-
-        <p class="section-text">
-            E-waste means discarded electronic devices such as
-            mobile phones, computers, televisions, batteries and chargers.
-            Proper management helps reduce pollution and recover useful materials.
-        </p>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="icon">
-                    📉
-                </div>
-
-                <h3>Reduce</h3>
-
-                <p>
-                    Reduce unnecessary electronic purchases and
-                    use devices for a longer period.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">
-                    🔄
-                </div>
-
-                <h3>Reuse</h3>
-
-                <p>
-                    Reuse, repair or donate working electronic devices
-                    instead of throwing them away.
-                </p>
-
-            </div>
-
-
-            <div class="card">
-
-                <div class="icon">
-                    ♻️
-                </div>
-
-                <h3>Recycle</h3>
-
-                <p>
-                    Send unwanted electronic devices to appropriate
-                    recycling or collection facilities.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= CATEGORIES ================= -->
-
-    <section id="categories">
-
-        <h2>E-Waste Categories</h2>
-
-        <p class="section-text">
-            Search and explore different types of electronic waste.
-        </p>
-
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                id="wasteSearch"
-                placeholder="🔍 Search E-Waste..."
-                onkeyup="searchWaste()"
-            >
+            <span>Learn More →</span>
 
         </div>
 
 
-        <div class="cards" id="categoryCards">
+        <div class="info-card clickable"
+             onclick="showInfo(
+             'Reuse',
+             'Reuse old electronic devices whenever possible. Donate working devices, repair them, upgrade components, or pass them to someone who can use them. Reusing products increases their useful life.'
+             )">
 
+            <div class="card-icon">🔄</div>
 
-            <div class="card waste-card">
+            <h3>Reuse</h3>
 
-                <div class="category-icon">
-                    📱
-                </div>
+            <p>
+                Repair, donate or reuse working electronic devices.
+            </p>
 
-                <h3>Mobile Phones</h3>
-
-                <p>
-                    Old and unused smartphones and feature phones.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    💻
-                </div>
-
-                <h3>Laptops</h3>
-
-                <p>
-                    Old laptops, notebooks and computer devices.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    🔋
-                </div>
-
-                <h3>Batteries</h3>
-
-                <p>
-                    Used rechargeable and electronic batteries.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    🔌
-                </div>
-
-                <h3>Chargers</h3>
-
-                <p>
-                    Unused mobile, laptop and electronic chargers.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    📺
-                </div>
-
-                <h3>Televisions</h3>
-
-                <p>
-                    Old LCD, LED and other television devices.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    🖨️
-                </div>
-
-                <h3>Printers</h3>
-
-                <p>
-                    Old printers and printing equipment.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    🎧
-                </div>
-
-                <h3>Headphones</h3>
-
-                <p>
-                    Old wired and wireless headphones and earphones.
-                </p>
-
-            </div>
-
-
-            <div class="card waste-card">
-
-                <div class="category-icon">
-                    ⌨️
-                </div>
-
-                <h3>Computer Accessories</h3>
-
-                <p>
-                    Keyboards, mice and other computer accessories.
-                </p>
-
-            </div>
+            <span>Learn More →</span>
 
         </div>
 
 
-        <p id="noResult" class="no-result">
-            No category found.
+        <div class="info-card clickable"
+             onclick="showInfo(
+             'Recycle',
+             'Recycle electronic waste through authorized collection and recycling facilities. Proper recycling helps recover metals, plastics and other useful materials while reducing environmental pollution.'
+             )">
+
+            <div class="card-icon">♻️</div>
+
+            <h3>Recycle</h3>
+
+            <p>
+                Send unusable electronics for responsible recycling.
+            </p>
+
+            <span>Learn More →</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= IDENTIFY SCHEDULE RECYCLE ================= -->
+
+<section class="section flow-section">
+
+    <div class="section-title">
+
+        <span>OUR SMART PROCESS</span>
+
+        <h2>
+            Identify → Schedule → Recycle
+        </h2>
+
+        <p>
+            Our simple three-step process makes responsible e-waste
+            disposal easier for everyone.
         </p>
 
-    </section>
+    </div>
 
 
-    <!-- ================= CALCULATOR ================= -->
+    <div class="process-cards">
 
-    <section id="calculator" class="calculator">
+        <div class="process-card">
 
-        <h2>E-Waste Calculator</h2>
+            <div class="step-number">01</div>
 
-        <p class="section-text">
-            Enter the number of electronic items you have
-            to calculate your total e-waste items.
-        </p>
+            <div class="process-icon">🔍</div>
 
+            <h3>Identify</h3>
 
-        <div class="calculator-box">
+            <p>
+                Identify your old or unwanted electronic items such as
+                phones, laptops, batteries, televisions and other devices.
+            </p>
 
-            <label>
-                📱 Mobile Phones
-            </label>
-
-            <input
-                type="number"
-                id="mobile"
-                min="0"
-                value="0"
-            >
-
-
-            <label>
-                💻 Laptops
-            </label>
-
-            <input
-                type="number"
-                id="laptop"
-                min="0"
-                value="0"
-            >
-
-
-            <label>
-                🔋 Batteries
-            </label>
-
-            <input
-                type="number"
-                id="battery"
-                min="0"
-                value="0"
-            >
-
-
-            <label>
-                🔌 Chargers
-            </label>
-
-            <input
-                type="number"
-                id="charger"
-                min="0"
-                value="0"
-            >
-
-
-            <button onclick="calculateWaste()">
-                Calculate Total
+            <button onclick="showInfo(
+                'Identify E-Waste',
+                'First identify the electronic item you want to dispose of. Check its category, condition and whether it can be reused, repaired or recycled.'
+            )">
+                Know More
             </button>
 
+        </div>
 
-            <div class="calculator-result">
 
-                <h3 id="result">
-                    Total E-Waste Items: 0
-                </h3>
+        <div class="process-card">
 
-            </div>
+            <div class="step-number">02</div>
+
+            <div class="process-icon">📅</div>
+
+            <h3>Schedule</h3>
+
+            <p>
+                Select your e-waste category, enter your details and
+                schedule a convenient pickup.
+            </p>
+
+            <button onclick="document.getElementById('schedule').scrollIntoView({behavior:'smooth'})">
+                Schedule Now
+            </button>
 
         </div>
 
-    </section>
+
+        <div class="process-card">
+
+            <div class="step-number">03</div>
+
+            <div class="process-icon">♻️</div>
+
+            <h3>Recycle</h3>
+
+            <p>
+                Your collected e-waste is sent for responsible recycling
+                and useful materials can be recovered.
+            </p>
+
+            <button onclick="showInfo(
+                'Responsible Recycling',
+                'Collected e-waste should be handled by authorized recycling facilities. Materials such as metals, plastics and glass can be recovered and harmful components can be managed safely.'
+            )">
+                Know More
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- ================= IMPACT ================= -->
+<!-- ================= CATEGORIES ================= -->
 
-    <section id="impact">
+<section id="categories" class="section">
 
-        <h2>Our Impact</h2>
+    <div class="section-title">
 
-        <p class="section-text">
-            Sample project dashboard statistics for demonstration.
+        <span>IDENTIFY YOUR E-WASTE</span>
+
+        <h2>
+            E-Waste Categories
+        </h2>
+
+        <p>
+            Click on a category to understand what it contains and how
+            it should be handled.
         </p>
 
-
-        <div class="impact-container">
-
-            <div class="impact-card">
-
-                <div class="impact-icon">
-                    📱
-                </div>
-
-                <h3>500+</h3>
-
-                <p>
-                    Devices Collected
-                </p>
-
-            </div>
+    </div>
 
 
-            <div class="impact-card">
+    <div class="category-grid" id="categoryGrid">
 
-                <div class="impact-icon">
-                    ♻️
-                </div>
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Mobile Phones',
+             'Old mobile phones contain metals, plastics, batteries and electronic components. Remove personal data and use an authorized recycling or collection service.'
+             )">
 
-                <h3>250+ kg</h3>
+            <div>📱</div>
 
-                <p>
-                    E-Waste Recycled
-                </p>
+            <h3>Mobile Phones</h3>
 
-            </div>
-
-
-            <div class="impact-card">
-
-                <div class="impact-icon">
-                    👥
-                </div>
-
-                <h3>150+</h3>
-
-                <p>
-                    Users Helped
-                </p>
-
-            </div>
-
-
-            <div class="impact-card">
-
-                <div class="impact-icon">
-                    🌱
-                </div>
-
-                <h3>100%</h3>
-
-                <p>
-                    Responsible Recycling
-                </p>
-
-            </div>
+            <p>Smartphones, feature phones and accessories.</p>
 
         </div>
 
-    </section>
+
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Laptops & Computers',
+             'Old laptops and computers contain valuable metals and electronic components. Before disposal, back up your files and securely remove personal information.'
+             )">
+
+            <div>💻</div>
+
+            <h3>Laptops & Computers</h3>
+
+            <p>Computers, laptops, keyboards and accessories.</p>
+
+        </div>
 
 
-    <!-- ================= HOW IT WORKS ================= -->
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Televisions',
+             'Televisions contain electronic components, plastics and other materials. Do not throw them into regular household waste. Use an appropriate e-waste collection service.'
+             )">
 
-    <section id="how">
+            <div>📺</div>
 
-        <h2>How It Works</h2>
+            <h3>Televisions</h3>
 
-        <p class="section-text">
-            Managing your e-waste is simple with our four-step process.
+            <p>LED, LCD and other electronic displays.</p>
+
+        </div>
+
+
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Batteries',
+             'Batteries should be handled carefully and should not be mixed with ordinary household waste. Store them safely and send them to suitable collection or recycling points.'
+             )">
+
+            <div>🔋</div>
+
+            <h3>Batteries</h3>
+
+            <p>Rechargeable and electronic device batteries.</p>
+
+        </div>
+
+
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Home Appliances',
+             'Old electronic appliances can contain recyclable metals, plastics and electronic components. Proper collection helps recover these materials.'
+             )">
+
+            <div>🏠</div>
+
+            <h3>Home Appliances</h3>
+
+            <p>Electronic household appliances and equipment.</p>
+
+        </div>
+
+
+        <div class="category-card clickable"
+             onclick="showInfo(
+             'Accessories',
+             'Chargers, cables, headphones, adapters and other electronic accessories can also become e-waste. Collect them separately instead of throwing them in regular waste.'
+             )">
+
+            <div>🎧</div>
+
+            <h3>Accessories</h3>
+
+            <p>Chargers, cables, headphones and adapters.</p>
+
+        </div>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="categorySearch"
+            placeholder="🔎 Search e-waste category..."
+            onkeyup="searchCategories()"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- ================= CALCULATOR ================= -->
+
+<section class="section calculator-section">
+
+    <div class="section-title">
+
+        <span>E-WASTE CALCULATOR</span>
+
+        <h2>Estimate Your E-Waste</h2>
+
+        <p>
+            Enter the approximate number of electronic items you have.
         </p>
 
-
-        <div class="cards">
-
-            <div class="step">
-
-                <div class="step-number">
-                    1
-                </div>
-
-                <h3>Identify</h3>
-
-                <p>
-                    Identify your unused, old or damaged electronic devices.
-                </p>
-
-            </div>
+    </div>
 
 
-            <div class="step">
+    <div class="calculator">
 
-                <div class="step-number">
-                    2
-                </div>
+        <div class="input-group">
 
-                <h3>Schedule</h3>
+            <label>Mobile Phones</label>
 
-                <p>
-                    Submit the pickup form and select your preferred date.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    3
-                </div>
-
-                <h3>Collect</h3>
-
-                <p>
-                    The e-waste pickup request is processed and collected.
-                </p>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    4
-                </div>
-
-                <h3>Recycle</h3>
-
-                <p>
-                    The electronic waste is sent for proper recycling.
-                </p>
-
-            </div>
+            <input type="number" id="mobiles" value="0" min="0">
 
         </div>
 
-    </section>
+
+        <div class="input-group">
+
+            <label>Laptops</label>
+
+            <input type="number" id="laptops" value="0" min="0">
+
+        </div>
 
 
-    <!-- ================= PICKUP ================= -->
+        <div class="input-group">
 
-    <section id="pickup" class="pickup">
+            <label>Televisions</label>
+
+            <input type="number" id="tvs" value="0" min="0">
+
+        </div>
+
+
+        <div class="input-group">
+
+            <label>Other Electronics</label>
+
+            <input type="number" id="others" value="0" min="0">
+
+        </div>
+
+
+        <button class="main-btn" onclick="calculateWaste()">
+            Calculate
+        </button>
+
+
+        <div id="calculatorResult" class="calculator-result">
+
+            Estimated e-waste:
+            <strong>0 kg</strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= IMPACT ================= -->
+
+<section class="section impact-section">
+
+    <div class="section-title">
+
+        <span>OUR IMPACT</span>
+
+        <h2>
+            Together We Can Create
+            <strong>A Cleaner Future</strong>
+        </h2>
+
+    </div>
+
+
+    <div class="impact-grid">
+
+        <div class="impact-card">
+
+            <span id="peopleCount">500+</span>
+
+            <p>People Reached</p>
+
+        </div>
+
+
+        <div class="impact-card">
+
+            <span id="wasteCount">250+</span>
+
+            <p>Kg E-Waste Managed</p>
+
+        </div>
+
+
+        <div class="impact-card">
+
+            <span id="applicationCount">0</span>
+
+            <p>Pickup Applications</p>
+
+        </div>
+
+
+        <div class="impact-card">
+
+            <span>100%</span>
+
+            <p>Eco Awareness</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SCHEDULE ================= -->
+
+<section id="schedule" class="section">
+
+    <div class="section-title">
+
+        <span>PICKUP SCHEDULER</span>
 
         <h2>Schedule E-Waste Pickup</h2>
 
-        <p class="section-text">
-            Submit your pickup request and get a unique Pickup ID.
+        <p>
+            Fill the form to create a pickup request.
+            Login is required.
         </p>
 
-
-        <form
-            id="pickupForm"
-            onsubmit="event.preventDefault(); schedulePickup();"
-        >
-
-            <input
-                type="text"
-                id="pickupName"
-                placeholder="Enter your name"
-                required
-            >
+    </div>
 
 
-            <input
-                type="tel"
-                id="pickupPhone"
-                placeholder="Enter mobile number"
-                required
-            >
+    <div class="form-container">
+
+        <form id="pickupForm">
+
+            <div class="form-row">
+
+                <div class="input-group">
+
+                    <label>Name</label>
+
+                    <input
+                        type="text"
+                        id="pickupName"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
 
 
-            <select id="pickupType" required>
+                <div class="input-group">
 
-                <option value="">
-                    Select E-Waste Type
-                </option>
+                    <label>Phone Number</label>
 
-                <option value="Mobile Phone">
-                    Mobile Phone
-                </option>
+                    <input
+                        type="tel"
+                        id="pickupPhone"
+                        placeholder="Enter phone number"
+                        required
+                    >
 
-                <option value="Laptop">
-                    Laptop
-                </option>
+                </div>
 
-                <option value="Battery">
-                    Battery
-                </option>
-
-                <option value="Charger">
-                    Charger
-                </option>
-
-                <option value="Television">
-                    Television
-                </option>
-
-                <option value="Printer">
-                    Printer
-                </option>
-
-            </select>
+            </div>
 
 
-            <input
-                type="number"
-                id="pickupQuantity"
-                placeholder="Quantity"
-                min="1"
-                required
-            >
+            <div class="input-group">
+
+                <label>E-Waste Category</label>
+
+                <select id="wasteType" required>
+
+                    <option value="">
+                        Select category
+                    </option>
+
+                    <option>Mobile Phones</option>
+                    <option>Laptops & Computers</option>
+                    <option>Televisions</option>
+                    <option>Batteries</option>
+                    <option>Home Appliances</option>
+                    <option>Accessories</option>
+
+                </select>
+
+            </div>
 
 
-            <textarea
-                id="pickupAddress"
-                placeholder="Enter pickup address"
-                required
-            ></textarea>
+            <div class="input-group">
+
+                <label>Pickup Address</label>
+
+                <textarea
+                    id="pickupAddress"
+                    placeholder="Enter pickup address"
+                    required
+                ></textarea>
+
+            </div>
 
 
-            <input
-                type="date"
-                id="pickupDate"
-                required
-            >
+            <div class="form-row">
+
+                <div class="input-group">
+
+                    <label>Preferred Date</label>
+
+                    <input
+                        type="date"
+                        id="pickupDate"
+                        required
+                    >
+
+                </div>
 
 
-            <button type="submit">
-                Schedule Pickup
+                <div class="input-group">
+
+                    <label>Preferred Time</label>
+
+                    <select id="pickupTime" required>
+
+                        <option value="">
+                            Select time
+                        </option>
+
+                        <option>9:00 AM - 11:00 AM</option>
+                        <option>11:00 AM - 1:00 PM</option>
+                        <option>2:00 PM - 4:00 PM</option>
+                        <option>4:00 PM - 6:00 PM</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button type="submit" class="main-btn">
+                📦 Apply for Pickup
             </button>
 
         </form>
 
 
-        <!-- PICKUP SUCCESS -->
+        <div id="pickupSuccess" class="success-box hidden"></div>
 
-        <div
-            id="pickupResult"
-            class="pickup-result"
+    </div>
+
+</section>
+
+
+<!-- ================= TRACKING ================= -->
+
+<section class="section tracking-section">
+
+    <div class="section-title">
+
+        <span>TRACK YOUR REQUEST</span>
+
+        <h2>Pickup Request Tracking</h2>
+
+        <p>
+            Enter your Pickup ID to check the current status.
+        </p>
+
+    </div>
+
+
+    <div class="tracking-box">
+
+        <input
+            type="text"
+            id="trackingId"
+            placeholder="Example: EW1234"
         >
 
-            <div class="success-icon">
-                ✅
+        <button class="main-btn" onclick="trackPickup()">
+            Track
+        </button>
+
+        <div id="trackingResult"></div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HISTORY ================= -->
+
+<section id="history" class="section">
+
+    <div class="section-title">
+
+        <span>YOUR ACTIVITY</span>
+
+        <h2>Pickup History</h2>
+
+        <p>
+            View all pickup requests submitted from this browser.
+        </p>
+
+    </div>
+
+
+    <div class="history-container">
+
+        <div class="history-summary">
+
+            <div>
+                <strong id="historyTotal">0</strong>
+                <span>Total Applications</span>
             </div>
 
-            <h3>
-                Pickup Request Submitted
-            </h3>
+            <div>
+                <strong id="historyPending">0</strong>
+                <span>Pending</span>
+            </div>
 
-            <p>
-                Your unique Pickup ID is:
-            </p>
-
-            <h2 id="pickupId">
-                EW0000
-            </h2>
-
-            <p>
-                Keep this ID to track your pickup request.
-            </p>
+            <div>
+                <strong id="historyCompleted">0</strong>
+                <span>Completed</span>
+            </div>
 
         </div>
 
 
-        <!-- PICKUP TRACKING -->
+        <div id="historyList"></div>
 
-        <div class="tracking-box">
+    </div>
+
+</section>
+
+
+<!-- ================= COLLECTION CENTERS ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>COLLECTION CENTERS</span>
+
+        <h2>Find a Collection Center</h2>
+
+    </div>
+
+
+    <div class="center-grid">
+
+        <div class="center-card">
+
+            <div>📍</div>
+
+            <h3>EcoCycle Pune Center</h3>
+
+            <p>
+                Pimpri-Chinchwad, Pune
+            </p>
+
+            <span>Open: 9 AM - 6 PM</span>
+
+        </div>
+
+
+        <div class="center-card">
+
+            <div>📍</div>
+
+            <h3>Green Recycling Center</h3>
+
+            <p>
+                Wakad, Pune
+            </p>
+
+            <span>Open: 10 AM - 6 PM</span>
+
+        </div>
+
+
+        <div class="center-card">
+
+            <div>📍</div>
+
+            <h3>Smart E-Waste Center</h3>
+
+            <p>
+                Bhosari, Pune
+            </p>
+
+            <span>Open: 9 AM - 5 PM</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TIPS ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>RECYCLING TIPS</span>
+
+        <h2>Before You Recycle</h2>
+
+    </div>
+
+
+    <div class="tips-grid">
+
+        <div class="tip-card">
+            🔐
+            <h3>Protect Your Data</h3>
+            <p>
+                Backup important files and remove personal information
+                before giving away an old device.
+            </p>
+        </div>
+
+
+        <div class="tip-card">
+            🔋
+            <h3>Handle Batteries Carefully</h3>
+            <p>
+                Keep batteries separate from ordinary household waste.
+            </p>
+        </div>
+
+
+        <div class="tip-card">
+            🛠️
+            <h3>Try Repair First</h3>
+            <p>
+                If a device can be repaired or upgraded, consider
+                extending its useful life.
+            </p>
+        </div>
+
+
+        <div class="tip-card">
+            ♻️
+            <h3>Use Proper Recycling</h3>
+            <p>
+                Give e-waste to appropriate collection or recycling
+                facilities.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROTECT YOUR DATA ================= -->
+
+<section class="section security-section">
+
+    <div class="security-content">
+
+        <div class="security-icon">
+            🛡️
+        </div>
+
+        <div>
+
+            <span>PRIVACY & SECURITY</span>
 
             <h2>
-                🚚 Track Your Pickup
+                Protect Your Data
             </h2>
 
             <p>
-                Enter your Pickup ID to check the current status.
+                Your electronic devices may contain personal photos,
+                documents, passwords and other private information.
+                Always protect your data before recycling or donating
+                an electronic device.
             </p>
 
+            <div class="security-points">
 
-            <div class="tracking-search">
+                <div>
+                    🔐
+                    <strong>Backup</strong>
+                    <span>
+                        Save important files before disposal.
+                    </span>
+                </div>
+
+                <div>
+                    🗑️
+                    <strong>Remove Personal Data</strong>
+                    <span>
+                        Delete personal files and accounts.
+                    </span>
+                </div>
+
+                <div>
+                    🔄
+                    <strong>Factory Reset</strong>
+                    <span>
+                        Reset supported devices before handing them over.
+                    </span>
+                </div>
+
+                <div>
+                    🛡️
+                    <strong>Data Handling</strong>
+                    <span>
+                        Do not share passwords, OTPs or sensitive
+                        information with unknown people.
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FAQ ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>FAQ</span>
+
+        <h2>Frequently Asked Questions</h2>
+
+    </div>
+
+
+    <div class="faq-container">
+
+        <details>
+
+            <summary>
+                What is e-waste?
+            </summary>
+
+            <p>
+                E-waste means discarded electrical and electronic
+                equipment such as phones, computers, televisions,
+                batteries and electronic accessories.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Why should e-waste be recycled?
+            </summary>
+
+            <p>
+                Recycling helps recover useful materials and reduces
+                environmental pollution caused by improper disposal.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Can I recycle a working device?
+            </summary>
+
+            <p>
+                Yes. However, reuse, repair or donation may be better
+                options when the device is still working.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Is my pickup request stored?
+            </summary>
+
+            <p>
+                In this project demo, pickup information is stored
+                locally in your browser using localStorage.
+            </p>
+
+        </details>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEEDBACK ================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        <span>FEEDBACK</span>
+
+        <h2>Tell Us What You Think</h2>
+
+    </div>
+
+
+    <div class="form-container">
+
+        <form id="feedbackForm">
+
+            <div class="input-group">
+
+                <label>Your Name</label>
 
                 <input
                     type="text"
-                    id="trackingId"
-                    placeholder="Example: EW1234"
+                    id="feedbackName"
+                    placeholder="Enter your name"
+                    required
                 >
 
-                <button onclick="trackPickup()">
-                    Track Pickup
-                </button>
+            </div>
+
+
+            <div class="input-group">
+
+                <label>Rating</label>
+
+                <select id="feedbackRating" required>
+
+                    <option value="">
+                        Select rating
+                    </option>
+
+                    <option>⭐⭐⭐⭐⭐ Excellent</option>
+                    <option>⭐⭐⭐⭐ Good</option>
+                    <option>⭐⭐⭐ Average</option>
+                    <option>⭐⭐ Needs Improvement</option>
+                    <option>⭐ Poor</option>
+
+                </select>
 
             </div>
 
 
-            <div
-                id="trackingMessage"
-                class="tracking-message"
-            ></div>
+            <div class="input-group">
 
+                <label>Message</label>
 
-            <div
-                id="trackingResult"
-                class="tracking-result"
-            >
-
-                <h3>
-                    Pickup Status
-                </h3>
-
-
-                <div class="status-container">
-
-
-                    <div
-                        class="status-step active"
-                        id="status1"
-                    >
-
-                        <span>
-                            1
-                        </span>
-
-                        <div>
-                            <strong>
-                                Request Submitted
-                            </strong>
-
-                            <small>
-                                Pickup request received
-                            </small>
-                        </div>
-
-                    </div>
-
-
-                    <div class="status-line"></div>
-
-
-                    <div
-                        class="status-step"
-                        id="status2"
-                    >
-
-                        <span>
-                            2
-                        </span>
-
-                        <div>
-                            <strong>
-                                Pickup Confirmed
-                            </strong>
-
-                            <small>
-                                Pickup request confirmed
-                            </small>
-                        </div>
-
-                    </div>
-
-
-                    <div class="status-line"></div>
-
-
-                    <div
-                        class="status-step"
-                        id="status3"
-                    >
-
-                        <span>
-                            3
-                        </span>
-
-                        <div>
-                            <strong>
-                                E-Waste Collected
-                            </strong>
-
-                            <small>
-                                E-waste collected successfully
-                            </small>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="status-line"></div>
-
-
-                    <div
-                        class="status-step"
-                        id="status4"
-                    >
-
-                        <span>
-                            4
-                        </span>
-
-                        <div>
-                            <strong>
-                                Sent for Recycling
-                            </strong>
-
-                            <small>
-                                E-waste sent for recycling
-                            </small>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    id="updateStatusBtn"
-                    class="demo-status-btn"
-                    onclick="updatePickupStatus()"
-                >
-                    Update Demo Status
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= COLLECTION CENTERS ================= -->
-
-    <section id="centers">
-
-        <h2>Collection Centers</h2>
-
-        <p class="section-text">
-            Sample collection centers for project demonstration.
-        </p>
-
-
-        <div class="cards">
-
-
-            <div class="center-card">
-
-                <div class="center-icon">
-                    📍
-                </div>
-
-                <h3>
-                    Pune Center
-                </h3>
-
-                <p>
-                    E-Waste Collection Point
-                </p>
-
-                <p>
-                    Open: 9 AM – 6 PM
-                </p>
+                <textarea
+                    id="feedbackMessage"
+                    placeholder="Write your feedback..."
+                    required
+                ></textarea>
 
             </div>
 
 
-            <div class="center-card">
-
-                <div class="center-icon">
-                    📍
-                </div>
-
-                <h3>
-                    Pimpri Center
-                </h3>
-
-                <p>
-                    E-Waste Collection Point
-                </p>
-
-                <p>
-                    Open: 9 AM – 6 PM
-                </p>
-
-            </div>
-
-
-            <div class="center-card">
-
-                <div class="center-icon">
-                    📍
-                </div>
-
-                <h3>
-                    PCMC Center
-                </h3>
-
-                <p>
-                    E-Waste Collection Point
-                </p>
-
-                <p>
-                    Open: 10 AM – 6 PM
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= TIPS ================= -->
-
-    <section id="tips">
-
-        <h2>Recycling Tips</h2>
-
-        <p class="section-text">
-            Follow these simple tips before recycling your electronics.
-        </p>
-
-
-        <div class="cards">
-
-
-            <div class="info-box">
-
-                <div class="tip-icon">
-                    🔒
-                </div>
-
-                <h3>
-                    Protect Your Data
-                </h3>
-
-                <p>
-                    Delete personal information and perform
-                    a factory reset before recycling devices.
-                </p>
-
-            </div>
-
-
-            <div class="info-box">
-
-                <div class="tip-icon">
-                    🔋
-                </div>
-
-                <h3>
-                    Handle Batteries Carefully
-                </h3>
-
-                <p>
-                    Do not throw batteries into normal household waste.
-                </p>
-
-            </div>
-
-
-            <div class="info-box">
-
-                <div class="tip-icon">
-                    ♻️
-                </div>
-
-                <h3>
-                    Use Recycling Centers
-                </h3>
-
-                <p>
-                    Give electronic waste to proper recycling
-                    or collection facilities.
-                </p>
-
-            </div>
-
-
-            <div class="info-box">
-
-                <div class="tip-icon">
-                    📦
-                </div>
-
-                <h3>
-                    Keep Devices Safe
-                </h3>
-
-                <p>
-                    Store old electronics safely until they
-                    are given for recycling.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= FAQ ================= -->
-
-    <section id="faq">
-
-        <h2>
-            Frequently Asked Questions
-        </h2>
-
-
-        <div class="faq-container">
-
-
-            <div class="faq-item">
-
-                <h3>
-                    What is E-Waste?
-                </h3>
-
-                <p>
-                    E-waste is electronic equipment that is
-                    discarded or no longer needed.
-                </p>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <h3>
-                    Why should we recycle E-Waste?
-                </h3>
-
-                <p>
-                    Recycling helps recover useful materials
-                    and reduces environmental pollution.
-                </p>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <h3>
-                    Can mobile phones be recycled?
-                </h3>
-
-                <p>
-                    Yes. Old mobile phones can be given to
-                    suitable electronic recycling facilities.
-                </p>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <h3>
-                    Can batteries be recycled?
-                </h3>
-
-                <p>
-                    Yes. Batteries should be handled and recycled
-                    through appropriate collection systems.
-                </p>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <h3>
-                    Is data deletion important?
-                </h3>
-
-                <p>
-                    Yes. Personal data should be removed before
-                    giving an old device for recycling.
-                </p>
-
-            </div>
-
-
-            <div class="faq-item">
-
-                <h3>
-                    How can I schedule a pickup?
-                </h3>
-
-                <p>
-                    Fill out the Schedule Pickup form on this website.
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= FEEDBACK ================= -->
-
-    <section id="feedback">
-
-        <h2>
-            Give Your Feedback
-        </h2>
-
-        <p class="section-text">
-            Your feedback helps us improve the e-waste management system.
-        </p>
-
-
-        <form
-            id="feedbackForm"
-            onsubmit="event.preventDefault(); submitFeedback();"
-        >
-
-            <input
-                type="text"
-                id="feedbackName"
-                placeholder="Enter your name"
-                required
-            >
-
-
-            <select id="rating" required>
-
-                <option value="">
-                    Select Rating
-                </option>
-
-                <option value="5 - Excellent">
-                    ⭐⭐⭐⭐⭐ Excellent
-                </option>
-
-                <option value="4 - Good">
-                    ⭐⭐⭐⭐ Good
-                </option>
-
-                <option value="3 - Average">
-                    ⭐⭐⭐ Average
-                </option>
-
-                <option value="2 - Poor">
-                    ⭐⭐ Poor
-                </option>
-
-                <option value="1 - Very Poor">
-                    ⭐ Very Poor
-                </option>
-
-            </select>
-
-
-            <textarea
-                id="feedbackMessage"
-                placeholder="Write your feedback"
-                required
-            ></textarea>
-
-
-            <button type="submit">
+            <button class="main-btn" type="submit">
                 Submit Feedback
             </button>
 
         </form>
 
-    </section>
+        <div id="feedbackResult"></div>
+
+    </div>
+
+</section>
 
 
-    <!-- ================= CONTACT ================= -->
+<!-- ================= CONTACT ================= -->
 
-    <section id="contact">
+<section id="contact" class="section contact-section">
 
-        <h2>
-            Contact Us
-        </h2>
+    <div class="section-title">
 
-        <div class="contact-container">
+        <span>CONTACT US</span>
 
-            <div class="contact-card">
+        <h2>Need Help?</h2>
 
-                <div>
-                    📧
-                </div>
+        <p>
+            Contact our project support team for questions related to
+            e-waste pickup and recycling.
+        </p>
 
-                <h3>
-                    Email
-                </h3>
-
-                <p>
-                    ewastemanagement@example.com
-                </p>
-
-            </div>
+    </div>
 
 
-            <div class="contact-card">
+    <div class="contact-grid">
 
-                <div>
-                    📞
-                </div>
+        <div class="contact-card">
 
-                <h3>
-                    Phone
-                </h3>
+            <div>📞</div>
 
-                <p>
-                    +91 98765 43210
-                </p>
+            <h3>Phone</h3>
 
-            </div>
+            <a href="tel:+919876543210">
+                +91 98765 43210
+            </a>
 
-
-            <div class="contact-card">
-
-                <div>
-                    📍
-                </div>
-
-                <h3>
-                    Location
-                </h3>
-
-                <p>
-                    Pune, Maharashtra
-                </p>
-
-            </div>
+            <p>Project Support</p>
 
         </div>
 
-    </section>
+
+        <div class="contact-card">
+
+            <div>📧</div>
+
+            <h3>Email</h3>
+
+            <a href="mailto:ecocycle.project@gmail.com">
+                ecocycle.project@gmail.com
+            </a>
+
+            <p>Project Enquiries</p>
+
+        </div>
 
 
-    <!-- ================= FOOTER ================= -->
+        <div class="contact-card">
 
-    <footer>
+            <div>📍</div>
 
-        <h3>
-            ♻️ Smart E-Waste Management
-        </h3>
+            <h3>Location</h3>
+
+            <p>
+                Pune, Maharashtra
+            </p>
+
+            <span>India</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="footer-main">
+
+        <div>
+
+            <h2>♻️ EcoCycle</h2>
+
+            <p>
+                Making e-waste management simple, responsible
+                and environmentally friendly.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>Quick Links</h3>
+
+            <a href="#home">Home</a>
+            <a href="#categories">Identify</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#history">History</a>
+
+        </div>
+
+
+        <div>
+
+            <h3>Data & Privacy</h3>
+
+            <a href="#contact">Contact</a>
+
+            <a href="#"
+               onclick="showInfo(
+               'Data Handling',
+               'This college project stores demo account and pickup information locally in the browser using localStorage. It does not use a real backend database. Do not enter real passwords, OTPs, financial information or highly sensitive personal information.'
+               ); return false;">
+                Protect Your Data
+            </a>
+
+            <a href="#"
+               onclick="showInfo(
+               'Privacy Information',
+               'The website is designed as an educational project. Demo data remains in the browser storage until it is cleared. For a real-world system, secure authentication, encrypted communication, access control and a protected database would be required.'
+               ); return false;">
+                Privacy
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
 
         <p>
-            Responsible E-Waste Management for a Cleaner Future.
+            © 2026 EcoCycle | E-Waste Management Project
         </p>
 
         <p>
-            Reduce • Reuse • Recycle ♻️
+            Reduce • Reuse • Recycle
         </p>
 
-        <hr>
+    </div>
 
-        <p>
-            © 2026 E-Waste Management Project
-        </p>
-
-    </footer>
+</footer>
 
 
-    <script src="script.js"></script>
+<!-- ================= AUTH MODAL ================= -->
+
+<div id="authModal" class="modal">
+
+    <div class="modal-content auth-modal">
+
+        <button class="close-btn" onclick="closeAuth()">
+            ×
+        </button>
+
+
+        <div id="loginPanel">
+
+            <div class="auth-icon">🔐</div>
+
+            <h2>Welcome Back</h2>
+
+            <p>Login to manage your e-waste pickups.</p>
+
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <button class="main-btn" type="submit">
+                    Login
+                </button>
+
+            </form>
+
+
+            <p class="switch-auth">
+                Don't have an account?
+
+                <button onclick="switchAuth('signup')">
+                    Sign Up
+                </button>
+            </p>
+
+            <div id="loginMessage"></div>
+
+        </div>
+
+
+        <div id="signupPanel" class="hidden">
+
+            <div class="auth-icon">👤</div>
+
+            <h2>Create Account</h2>
+
+            <p>Join EcoCycle and manage your recycling requests.</p>
+
+
+            <form id="signupForm">
+
+                <div class="input-group">
+
+                    <label>Full Name</label>
+
+                    <input
+                        type="text"
+                        id="signupName"
+                        placeholder="Enter full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        placeholder="Enter email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        id="signupPassword"
+                        placeholder="Create password"
+                        required
+                    >
+
+                </div>
+
+
+                <button class="main-btn" type="submit">
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="switch-auth">
+
+                Already have an account?
+
+                <button onclick="switchAuth('login')">
+                    Login
+                </button>
+
+            </p>
+
+
+            <div id="signupMessage"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= INFO MODAL ================= -->
+
+<div id="infoModal" class="modal">
+
+    <div class="modal-content">
+
+        <button class="close-btn" onclick="closeInfo()">
+            ×
+        </button>
+
+        <div class="modal-icon">
+            ♻️
+        </div>
+
+        <h2 id="infoTitle">
+            Information
+        </h2>
+
+        <p id="infoText"></p>
+
+        <button class="main-btn" onclick="closeInfo()">
+            Got it
+        </button>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
-
 </html>

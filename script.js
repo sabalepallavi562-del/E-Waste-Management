@@ -1,71 +1,403 @@
-// ================= DARK MODE =================
+/* =====================================================
+   E-WASTE MANAGEMENT WEBSITE
+   EcoCycle
+   ===================================================== */
 
-function toggleDarkMode() {
 
-    document.body.classList.toggle("dark-mode");
+/* ================= GLOBAL DATA ================= */
 
-    const button = document.getElementById("darkModeBtn");
+let users = JSON.parse(localStorage.getItem("ecoUsers")) || [];
 
-    if (document.body.classList.contains("dark-mode")) {
+let currentUser =
+    JSON.parse(localStorage.getItem("ecoCurrentUser")) || null;
 
-        button.innerText = "☀️ Light Mode";
+let pickups =
+    JSON.parse(localStorage.getItem("ecoPickups")) || [];
 
-        localStorage.setItem("darkMode", "on");
+
+/* ================= PAGE LOAD ================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    updateUserUI();
+
+    updateApplicationCount();
+
+    displayHistory();
+
+    setMinimumDate();
+
+    loadDarkMode();
+
+});
+
+
+/* ================= AUTH ================= */
+
+function openAuth(type) {
+
+    document.getElementById("authModal").classList.add("show");
+
+    switchAuth(type);
+}
+
+
+function closeAuth() {
+
+    document.getElementById("authModal").classList.remove("show");
+
+}
+
+
+function switchAuth(type) {
+
+    const loginPanel =
+        document.getElementById("loginPanel");
+
+    const signupPanel =
+        document.getElementById("signupPanel");
+
+
+    if (type === "login") {
+
+        loginPanel.classList.remove("hidden");
+
+        signupPanel.classList.add("hidden");
 
     } else {
 
-        button.innerText = "🌙 Dark Mode";
+        loginPanel.classList.add("hidden");
 
-        localStorage.setItem("darkMode", "off");
+        signupPanel.classList.remove("hidden");
 
     }
 
 }
 
 
-// Restore Dark Mode
+/* ================= SIGN UP ================= */
 
-window.addEventListener("load", function () {
+document
+.getElementById("signupForm")
+.addEventListener("submit", function (event) {
 
-    if (localStorage.getItem("darkMode") === "on") {
+    event.preventDefault();
 
-        document.body.classList.add("dark-mode");
 
-        document.getElementById("darkModeBtn").innerText =
-            "☀️ Light Mode";
+    const name =
+        document.getElementById("signupName").value.trim();
 
+    const email =
+        document.getElementById("signupEmail").value.trim().toLowerCase();
+
+    const password =
+        document.getElementById("signupPassword").value;
+
+
+    if (password.length < 4) {
+
+        showMessage(
+            "signupMessage",
+            "Password should contain at least 4 characters.",
+            "error"
+        );
+
+        return;
     }
+
+
+    const existingUser =
+        users.find(user => user.email === email);
+
+
+    if (existingUser) {
+
+        showMessage(
+            "signupMessage",
+            "This email is already registered. Please login.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    const newUser = {
+
+        id: Date.now(),
+
+        name: name,
+
+        email: email,
+
+        password: password,
+
+        createdAt: new Date().toLocaleString()
+
+    };
+
+
+    users.push(newUser);
+
+
+    localStorage.setItem(
+        "ecoUsers",
+        JSON.stringify(users)
+    );
+
+
+    currentUser = {
+
+        id: newUser.id,
+
+        name: newUser.name,
+
+        email: newUser.email
+
+    };
+
+
+    localStorage.setItem(
+        "ecoCurrentUser",
+        JSON.stringify(currentUser)
+    );
+
+
+    showMessage(
+        "signupMessage",
+        "Account created successfully! You are now logged in.",
+        "success"
+    );
+
+
+    setTimeout(function () {
+
+        closeAuth();
+
+        updateUserUI();
+
+        document.getElementById("signupForm").reset();
+
+    }, 1000);
 
 });
 
 
-// ================= SEARCH E-WASTE =================
+/* ================= LOGIN ================= */
 
-function searchWaste() {
+document
+.getElementById("loginForm")
+.addEventListener("submit", function (event) {
 
-    const searchText =
-        document.getElementById("wasteSearch").value.toLowerCase();
+    event.preventDefault();
+
+
+    const email =
+        document.getElementById("loginEmail").value.trim().toLowerCase();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    const user =
+        users.find(
+            item =>
+                item.email === email &&
+                item.password === password
+        );
+
+
+    if (!user) {
+
+        showMessage(
+            "loginMessage",
+            "Invalid email or password.",
+            "error"
+        );
+
+        return;
+    }
+
+
+    currentUser = {
+
+        id: user.id,
+
+        name: user.name,
+
+        email: user.email
+
+    };
+
+
+    localStorage.setItem(
+        "ecoCurrentUser",
+        JSON.stringify(currentUser)
+    );
+
+
+    showMessage(
+        "loginMessage",
+        "Login successful!",
+        "success"
+    );
+
+
+    setTimeout(function () {
+
+        closeAuth();
+
+        updateUserUI();
+
+        document.getElementById("loginForm").reset();
+
+    }, 800);
+
+});
+
+
+/* ================= LOGOUT ================= */
+
+function logout() {
+
+    currentUser = null;
+
+    localStorage.removeItem("ecoCurrentUser");
+
+    updateUserUI();
+
+    alert("You have been logged out.");
+
+}
+
+
+/* ================= USER UI ================= */
+
+function updateUserUI() {
+
+    const loginBtn =
+        document.getElementById("loginBtn");
+
+    const signupBtn =
+        document.getElementById("signupBtn");
+
+    const userBox =
+        document.getElementById("userBox");
+
+    const welcomeUser =
+        document.getElementById("welcomeUser");
+
+
+    if (currentUser) {
+
+        loginBtn.classList.add("hidden");
+
+        signupBtn.classList.add("hidden");
+
+        userBox.classList.remove("hidden");
+
+        welcomeUser.textContent =
+            "Hi, " + currentUser.name;
+
+        document.getElementById("pickupName").value =
+            currentUser.name;
+
+    } else {
+
+        loginBtn.classList.remove("hidden");
+
+        signupBtn.classList.remove("hidden");
+
+        userBox.classList.add("hidden");
+
+        welcomeUser.textContent = "";
+
+    }
+
+}
+
+
+/* ================= MESSAGE ================= */
+
+function showMessage(elementId, message, type) {
+
+    const element =
+        document.getElementById(elementId);
+
+
+    element.textContent = message;
+
+    element.style.marginTop = "12px";
+
+    element.style.padding = "10px";
+
+    element.style.borderRadius = "7px";
+
+
+    if (type === "success") {
+
+        element.style.background = "#e6f7eb";
+
+        element.style.color = "#147332";
+
+    } else {
+
+        element.style.background = "#fdecec";
+
+        element.style.color = "#a12626";
+
+    }
+
+}
+
+
+/* ================= INFO MODAL ================= */
+
+function showInfo(title, text) {
+
+    document.getElementById("infoTitle").textContent =
+        title;
+
+    document.getElementById("infoText").textContent =
+        text;
+
+    document.getElementById("infoModal")
+        .classList.add("show");
+
+}
+
+
+function closeInfo() {
+
+    document.getElementById("infoModal")
+        .classList.remove("show");
+
+}
+
+
+/* ================= CATEGORY SEARCH ================= */
+
+function searchCategories() {
+
+    const search =
+        document.getElementById("categorySearch")
+        .value
+        .toLowerCase();
+
 
     const cards =
-        document.querySelectorAll(".waste-card");
-
-    const noResult =
-        document.getElementById("noResult");
-
-    let found = false;
+        document.querySelectorAll(".category-card");
 
 
     cards.forEach(function (card) {
 
-        const cardText =
-            card.innerText.toLowerCase();
+        const text =
+            card.textContent.toLowerCase();
 
 
-        if (cardText.includes(searchText)) {
+        if (text.includes(search)) {
 
             card.style.display = "";
-
-            found = true;
 
         } else {
 
@@ -75,437 +407,552 @@ function searchWaste() {
 
     });
 
-
-    if (found || searchText === "") {
-
-        noResult.style.display = "none";
-
-    } else {
-
-        noResult.style.display = "block";
-
-    }
-
 }
 
 
-// ================= E-WASTE CALCULATOR =================
+/* ================= CALCULATOR ================= */
 
 function calculateWaste() {
 
-    const mobile =
-        Number(document.getElementById("mobile").value);
+    const mobiles =
+        Number(document.getElementById("mobiles").value) || 0;
 
-    const laptop =
-        Number(document.getElementById("laptop").value);
+    const laptops =
+        Number(document.getElementById("laptops").value) || 0;
 
-    const battery =
-        Number(document.getElementById("battery").value);
+    const tvs =
+        Number(document.getElementById("tvs").value) || 0;
 
-    const charger =
-        Number(document.getElementById("charger").value);
+    const others =
+        Number(document.getElementById("others").value) || 0;
 
 
     const total =
-        mobile + laptop + battery + charger;
+
+        (mobiles * 0.2) +
+
+        (laptops * 2) +
+
+        (tvs * 8) +
+
+        (others * 1);
 
 
-    document.getElementById("result").innerText =
-        "Total E-Waste Items: " + total;
+    document.getElementById("calculatorResult").innerHTML =
 
-}
-
-
-// ================= PICKUP SYSTEM =================
-
-let currentPickupId = "";
-
-let currentStatus = 0;
-
-
-// Generate Pickup ID
-
-function generatePickupId() {
-
-    const randomNumber =
-        Math.floor(1000 + Math.random() * 9000);
-
-    return "EW" + randomNumber;
+        `Estimated e-waste:
+        <strong>${total.toFixed(2)} kg</strong>`;
 
 }
 
 
-// Schedule Pickup
+/* ================= DATE ================= */
 
-function schedulePickup() {
+function setMinimumDate() {
+
+    const dateInput =
+        document.getElementById("pickupDate");
+
+
+    const today =
+        new Date()
+        .toISOString()
+        .split("T")[0];
+
+
+    dateInput.min = today;
+
+}
+
+
+/* ================= PICKUP FORM ================= */
+
+document
+.getElementById("pickupForm")
+.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+
+    if (!currentUser) {
+
+        alert(
+            "Please Sign Up or Login before scheduling a pickup."
+        );
+
+        openAuth("login");
+
+        return;
+    }
+
 
     const name =
-        document.getElementById("pickupName").value;
+        document.getElementById("pickupName").value.trim();
 
     const phone =
-        document.getElementById("pickupPhone").value;
+        document.getElementById("pickupPhone").value.trim();
 
-    const type =
-        document.getElementById("pickupType").value;
+    const wasteType =
+        document.getElementById("wasteType").value;
 
-    const quantity =
-        document.getElementById("pickupQuantity").value;
+    const address =
+        document.getElementById("pickupAddress").value.trim();
 
     const date =
         document.getElementById("pickupDate").value;
 
-
-    currentPickupId =
-        generatePickupId();
-
-
-    currentStatus = 0;
+    const time =
+        document.getElementById("pickupTime").value;
 
 
-    // Save pickup information
+    const pickupId =
+        "EW" +
+        Math.floor(
+            1000 + Math.random() * 9000
+        );
+
+
+    const newPickup = {
+
+        id: Date.now(),
+
+        pickupId: pickupId,
+
+        userId: currentUser.id,
+
+        userName: name,
+
+        userEmail: currentUser.email,
+
+        phone: phone,
+
+        wasteType: wasteType,
+
+        address: address,
+
+        date: date,
+
+        time: time,
+
+        status: "Pending",
+
+        createdAt:
+            new Date().toLocaleString()
+
+    };
+
+
+    pickups.push(newPickup);
+
 
     localStorage.setItem(
-        "pickupId",
-        currentPickupId
-    );
-
-    localStorage.setItem(
-        "pickupStatus",
-        currentStatus
+        "ecoPickups",
+        JSON.stringify(pickups)
     );
 
 
-    // Display Pickup ID
+    document.getElementById("pickupSuccess").innerHTML = `
 
-    document.getElementById("pickupId").innerText =
-        currentPickupId;
+        <strong>✅ Pickup Request Submitted!</strong>
 
-    document.getElementById("pickupResult").style.display =
-        "block";
+        <br><br>
 
+        Your Pickup ID is:
 
-    // Put ID in tracking box
+        <strong>${pickupId}</strong>
 
-    document.getElementById("trackingId").value =
-        currentPickupId;
+        <br><br>
 
+        Please save this ID to track your request.
 
-    // Reset tracking
-
-    resetTracking();
+    `;
 
 
-    // Show success message
-
-    alert(
-        "Pickup Request Submitted Successfully! ♻️\n\n" +
-
-        "Name: " + name + "\n" +
-
-        "Mobile: " + phone + "\n" +
-
-        "E-Waste: " + type + "\n" +
-
-        "Quantity: " + quantity + "\n" +
-
-        "Pickup Date: " + date + "\n\n" +
-
-        "Your Pickup ID: " + currentPickupId
-    );
+    document
+        .getElementById("pickupSuccess")
+        .classList.remove("hidden");
 
 
-    // Scroll to pickup result
+    document.getElementById("pickupForm").reset();
 
-    document.getElementById("pickupResult")
-        .scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
+
+    document.getElementById("pickupName").value =
+        currentUser.name;
+
+
+    updateApplicationCount();
+
+    displayHistory();
+
+});
+
+
+/* ================= APPLICATION COUNT ================= */
+
+function updateApplicationCount() {
+
+    const count =
+        pickups.length;
+
+
+    document.getElementById("applicationCount")
+        .textContent = count;
+
+
+    const peopleCount =
+        500 + count;
+
+
+    document.getElementById("peopleCount")
+        .textContent = peopleCount + "+";
 
 }
 
 
-// ================= TRACK PICKUP =================
+/* ================= TRACK PICKUP ================= */
 
 function trackPickup() {
 
-    const enteredId =
+    const id =
         document.getElementById("trackingId")
-            .value
-            .trim()
-            .toUpperCase();
+        .value
+        .trim()
+        .toUpperCase();
 
 
-    const savedId =
-        localStorage.getItem("pickupId");
-
-
-    const message =
-        document.getElementById("trackingMessage");
-
-
-    const trackingResult =
+    const result =
         document.getElementById("trackingResult");
 
 
-    if (enteredId === "") {
+    if (!id) {
 
-        message.innerText =
-            "Please enter your Pickup ID.";
-
-        message.style.color =
-            "#d32f2f";
-
-        trackingResult.style.display =
-            "none";
+        result.innerHTML =
+            "<p>Please enter a Pickup ID.</p>";
 
         return;
-
     }
 
 
-    if (
-        savedId &&
-        enteredId === savedId.toUpperCase()
-    ) {
-
-        currentPickupId = savedId;
-
-        currentStatus =
-            Number(
-                localStorage.getItem("pickupStatus")
-            ) || 0;
-
-
-        message.innerText =
-            "Pickup ID found successfully!";
-
-        message.style.color =
-            "#146b3a";
-
-
-        trackingResult.style.display =
-            "block";
-
-
-        updateStatusDisplay();
-
-    } else {
-
-        message.innerText =
-            "Pickup ID not found. Please check your ID.";
-
-        message.style.color =
-            "#d32f2f";
-
-
-        trackingResult.style.display =
-            "none";
-
-    }
-
-}
-
-
-// ================= UPDATE STATUS =================
-
-function updatePickupStatus() {
-
-    if (!currentPickupId) {
-
-        alert(
-            "Please create or track a valid Pickup ID first."
+    const pickup =
+        pickups.find(
+            item => item.pickupId === id
         );
+
+
+    if (!pickup) {
+
+        result.innerHTML = `
+
+            <div class="success-box">
+
+                ❌ Pickup ID not found.
+
+                <br>
+
+                Please check your ID and try again.
+
+            </div>
+
+        `;
 
         return;
+    }
+
+
+    result.innerHTML = `
+
+        <div class="success-box">
+
+            <strong>Pickup Found ✅</strong>
+
+            <br><br>
+
+            <strong>Pickup ID:</strong>
+            ${pickup.pickupId}
+
+            <br>
+
+            <strong>Name:</strong>
+            ${pickup.userName}
+
+            <br>
+
+            <strong>E-Waste:</strong>
+            ${pickup.wasteType}
+
+            <br>
+
+            <strong>Date:</strong>
+            ${pickup.date}
+
+            <br>
+
+            <strong>Time:</strong>
+            ${pickup.time}
+
+            <br>
+
+            <strong>Status:</strong>
+            <span class="status">
+                ${pickup.status}
+            </span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ================= HISTORY ================= */
+
+function displayHistory() {
+
+    const historyList =
+        document.getElementById("historyList");
+
+
+    let userPickups = [];
+
+
+    if (currentUser) {
+
+        userPickups =
+            pickups.filter(
+                item =>
+                    item.userId === currentUser.id
+            );
 
     }
 
 
-    if (currentStatus < 3) {
-
-        currentStatus++;
-
-
-        localStorage.setItem(
-            "pickupStatus",
-            currentStatus
-        );
+    document.getElementById("historyTotal")
+        .textContent =
+        userPickups.length;
 
 
-        updateStatusDisplay();
+    document.getElementById("historyPending")
+        .textContent =
+        userPickups.filter(
+            item =>
+                item.status === "Pending"
+        ).length;
 
 
-        const messages = [
-
-            "Request Submitted",
-
-            "Pickup Confirmed",
-
-            "E-Waste Collected",
-
-            "E-Waste Sent for Recycling"
-
-        ];
+    document.getElementById("historyCompleted")
+        .textContent =
+        userPickups.filter(
+            item =>
+                item.status === "Completed"
+        ).length;
 
 
-        alert(
-            "Pickup Status Updated!\n\n" +
-            messages[currentStatus]
-        );
+    if (!currentUser) {
+
+        historyList.innerHTML = `
+
+            <div class="empty-history">
+
+                🔐 Please login to view your pickup history.
+
+            </div>
+
+        `;
+
+        return;
+    }
 
 
-    } else {
+    if (userPickups.length === 0) {
 
-        alert(
-            "Pickup is already completed and sent for recycling! ♻️"
-        );
+        historyList.innerHTML = `
+
+            <div class="empty-history">
+
+                📦 No pickup applications yet.
+
+                <br><br>
+
+                Schedule your first e-waste pickup!
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    historyList.innerHTML =
+        userPickups
+        .slice()
+        .reverse()
+        .map(function (pickup) {
+
+            return `
+
+                <div class="history-item">
+
+                    <h3>
+                        ♻️ ${pickup.wasteType}
+                    </h3>
+
+                    <p>
+                        <strong>Pickup ID:</strong>
+                        ${pickup.pickupId}
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong>
+                        ${pickup.date}
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong>
+                        ${pickup.time}
+                    </p>
+
+                    <p>
+                        <strong>Address:</strong>
+                        ${pickup.address}
+                    </p>
+
+                    <p>
+                        <strong>Applied On:</strong>
+                        ${pickup.createdAt}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        <span class="status">
+                            ${pickup.status}
+                        </span>
+                    </p>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* ================= FEEDBACK ================= */
+
+document
+.getElementById("feedbackForm")
+.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+
+    const name =
+        document.getElementById("feedbackName").value;
+
+
+    document.getElementById("feedbackResult").innerHTML = `
+
+        <div class="success-box">
+
+            ✅ Thank you, ${name}!
+
+            <br>
+
+            Your feedback has been received.
+
+        </div>
+
+    `;
+
+
+    this.reset();
+
+});
+
+
+/* ================= DARK MODE ================= */
+
+const darkModeBtn =
+    document.getElementById("darkModeBtn");
+
+
+darkModeBtn.addEventListener("click", function () {
+
+    document.body.classList.toggle("dark");
+
+
+    const isDark =
+        document.body.classList.contains("dark");
+
+
+    localStorage.setItem(
+        "ecoDarkMode",
+        isDark
+    );
+
+
+    darkModeBtn.textContent =
+        isDark ? "☀️" : "🌙";
+
+});
+
+
+function loadDarkMode() {
+
+    const dark =
+        localStorage.getItem("ecoDarkMode");
+
+
+    if (dark === "true") {
+
+        document.body.classList.add("dark");
+
+        darkModeBtn.textContent = "☀️";
 
     }
 
 }
 
 
-// ================= STATUS DISPLAY =================
+/* ================= CLOSE MODAL ================= */
 
-function updateStatusDisplay() {
+window.addEventListener("click", function (event) {
 
-    const steps = [
+    const authModal =
+        document.getElementById("authModal");
 
-        document.getElementById("status1"),
-
-        document.getElementById("status2"),
-
-        document.getElementById("status3"),
-
-        document.getElementById("status4")
-
-    ];
+    const infoModal =
+        document.getElementById("infoModal");
 
 
-    steps.forEach(function (step, index) {
+    if (event.target === authModal) {
 
-        if (index <= currentStatus) {
-
-            step.classList.add("active");
-
-        } else {
-
-            step.classList.remove("active");
-
-        }
-
-    });
-
-
-    const button =
-        document.getElementById("updateStatusBtn");
-
-
-    if (currentStatus >= 3) {
-
-        button.innerText =
-            "✅ Recycling Completed";
-
-        button.disabled = true;
-
-        button.style.opacity = "0.6";
-
-    } else {
-
-        button.innerText =
-            "Update Demo Status";
-
-        button.disabled = false;
-
-        button.style.opacity = "1";
+        closeAuth();
 
     }
 
-}
 
+    if (event.target === infoModal) {
 
-// ================= RESET TRACKING =================
-
-function resetTracking() {
-
-    currentStatus = 0;
-
-
-    document.getElementById("trackingResult")
-        .style.display = "none";
-
-
-    document.getElementById("trackingMessage")
-        .innerText = "";
-
-
-    updateStatusDisplay();
-
-}
-
-
-// ================= RESTORE PICKUP =================
-
-window.addEventListener("load", function () {
-
-    const savedId =
-        localStorage.getItem("pickupId");
-
-
-    const savedStatus =
-        localStorage.getItem("pickupStatus");
-
-
-    if (savedId) {
-
-        currentPickupId = savedId;
-
-        currentStatus =
-            Number(savedStatus) || 0;
-
-
-        document.getElementById("pickupId")
-            .innerText = savedId;
-
-
-        document.getElementById("trackingId")
-            .value = savedId;
-
-
-        document.getElementById("pickupResult")
-            .style.display = "block";
+        closeInfo();
 
     }
 
 });
 
 
-// ================= FEEDBACK =================
+/* ================= ESCAPE KEY ================= */
 
-function submitFeedback() {
+document.addEventListener("keydown", function (event) {
 
-    const name =
-        document.getElementById("feedbackName").value;
+    if (event.key === "Escape") {
 
-    const rating =
-        document.getElementById("rating").value;
+        closeAuth();
 
-    const message =
-        document.getElementById("feedbackMessage").value;
+        closeInfo();
 
+    }
 
-    alert(
-        "Thank you for your feedback! ⭐\n\n" +
-
-        "Name: " + name + "\n" +
-
-        "Rating: " + rating + "\n" +
-
-        "Feedback: " + message
-    );
-
-
-    document.getElementById("feedbackForm").reset();
-
-}
+});
